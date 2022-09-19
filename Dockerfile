@@ -8,7 +8,7 @@ COPY ./ /app
 
 RUN go mod tidy
 
-RUN go build -o be11-project-Ecommerce
+RUN go build -o be11-dashboard-app
 
-CMD ["./be11-project-Ecommerce"]
+CMD ["./be11-dashboard-app"]
 
