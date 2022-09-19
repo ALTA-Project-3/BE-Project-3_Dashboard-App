@@ -3,8 +3,7 @@
 
 # Contributor
 - Amin
-- Dian
-- Jauhari
+- Nawi
 
 
 
