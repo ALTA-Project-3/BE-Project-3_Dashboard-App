@@ -20,6 +20,7 @@ func New(e *echo.Echo, data user.UsecaseInterface) {
 
 	e.GET("/user", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.PUT("/user", handler.PutDataUser, middlewares.JWTMiddleware())
+	e.DELETE("/admin/:id", handler.DeleteDataUser, middlewares.JWTMiddleware())
 
 }
 
@@ -73,7 +74,7 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 	}
 
 	if idToken != 1 {
-		if update.Role != "" || update.Status != "" || update.Team != "" {
+		if update.Role != "" || update.Status != "" || update.Team != "" || update.ID != uint(idToken) {
 			return c.JSON(400, helper.FailedResponseHelper("not have access edit role, status and team"))
 		}
 	}
