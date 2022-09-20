@@ -6,7 +6,6 @@ type Response struct {
 	ID       uint   `json:"id"`
 	Fullname string `json:"fullname"`
 	Email    string `json:"email"`
-	Password string `json:"password"`
 	Team     string `json:"team"`
 	Role     string `json:"role"`
 	Status   string `json:"status"`
@@ -28,7 +27,6 @@ func toRespon(data user.Core) Response {
 		ID:       data.ID,
 		Fullname: data.Fullname,
 		Email:    data.Email,
-		Password: data.Password,
 		Team:     data.Team,
 		Role:     data.Role,
 		Status:   data.Status,
