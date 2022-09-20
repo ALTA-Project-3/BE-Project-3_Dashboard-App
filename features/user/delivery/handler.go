@@ -18,8 +18,8 @@ func New(e *echo.Echo, data user.UsecaseInterface) {
 		userUsecase: data,
 	}
 
-	e.GET("/user", handler.GetAllUser, middlewares.JWTMiddleware())
-	e.PUT("/user", handler.PutDataUser, middlewares.JWTMiddleware())
+	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
+	e.PUT("/users", handler.PutDataUser, middlewares.JWTMiddleware())
 	e.DELETE("/admin/:id", handler.DeleteDataUser, middlewares.JWTMiddleware())
 	e.POST("/admin", handler.PostDataUser, middlewares.JWTMiddleware())
 
