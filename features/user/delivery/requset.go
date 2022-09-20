@@ -1,7 +1,7 @@
 package delivery
 
 type Request struct {
-	ID       uint   `json:"id" form:"id"`
+	ID       uint
 	Fullname string `json:"fullname" form:"fullname"`
 	Email    string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`

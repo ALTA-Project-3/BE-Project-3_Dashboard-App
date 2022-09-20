@@ -1,15 +1,21 @@
 package main
 
 import (
+	"fmt"
+	"project/dashboard/config"
+	"project/dashboard/factory"
+	"project/dashboard/migration"
+	"project/dashboard/utils/database/mysql"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	// cfg := config.GetConfig()
-	// db := mysql.InitDBmySql(cfg)
+	cfg := config.GetConfig()
+	db := mysql.InitDBmySql(cfg)
 
-	// migration.InitMigrate(db)
+	migration.InitMigrate(db)
 
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
@@ -20,7 +26,7 @@ func main() {
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 	}))
 
-	// factory.InitFactory(e, db)
+	factory.InitFactory(e, db)
 
-	// e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", cfg.SERVER_PORT)))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", cfg.SERVER_PORT)))
 }

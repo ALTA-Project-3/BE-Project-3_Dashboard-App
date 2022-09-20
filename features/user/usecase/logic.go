@@ -32,3 +32,13 @@ func (usecase *userUsecase) PutData(data user.Core) int {
 	return row
 
 }
+
+func (usecase *userUsecase) DeleteData(id int) int {
+
+	row := usecase.userData.DelData(id)
+	if row == -1 {
+		return -1
+	}
+
+	return row
+}

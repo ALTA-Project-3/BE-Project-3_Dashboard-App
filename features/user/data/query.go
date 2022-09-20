@@ -50,3 +50,13 @@ func (repo *dataUser) UpdateData(data user.Core) int {
 	return 1
 
 }
+
+func (repo *dataUser) DelData(id int) int {
+
+	tx := repo.db.Unscoped().Where("id = ? ", id).Delete(&User{})
+	if tx.Error != nil {
+		return -1
+	}
+
+	return int(tx.RowsAffected)
+}

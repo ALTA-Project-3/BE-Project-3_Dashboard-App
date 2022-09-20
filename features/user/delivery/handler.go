@@ -85,3 +85,24 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 
 	return c.JSON(200, helper.SuccessResponseHelper("success update data"))
 }
+
+func (delivery *userDelivery) DeleteDataUser(c echo.Context) error {
+
+	idToken := middlewares.ExtractToken(c)
+	if idToken != 1 {
+		return c.JSON(400, helper.FailedResponseHelper("not have access"))
+	}
+
+	param := c.Param("id")
+	id, err := strconv.Atoi(param)
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper("param must be number"))
+	}
+
+	row := delivery.userUsecase.DeleteData(id)
+	if row == -1 || row == 0 {
+		return c.JSON(400, helper.FailedResponseHelper("failed to delete data"))
+	}
+
+	return c.JSON(400, helper.SuccessResponseHelper("success delete data"))
+}
