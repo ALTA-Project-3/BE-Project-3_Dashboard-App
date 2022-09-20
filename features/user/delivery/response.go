@@ -12,6 +12,17 @@ type Response struct {
 	Status   string `json:"status"`
 }
 
+type ResponseDashboard struct {
+	ID               uint   `json:"id"`
+	Fullname         string `json:"fullname"`
+	RegisterinMonth  int    `json:"registerInMonth"`
+	PlacementinMonth int    `json:"placementInMonth"`
+	GraduateinMonth  int    `json:"graduateInMonth"`
+	Menteeactive     int    `json:"menteeActive"`
+	MenteePlacement  int    `json:"menteePlacement"`
+	MenteeFeedback   int    `json:"menteeFeedback"`
+}
+
 func toRespon(data user.Core) Response {
 	return Response{
 		ID:       data.ID,
@@ -31,4 +42,11 @@ func toResponList(data []user.Core) []Response {
 	}
 
 	return dataAll
+}
+
+func toProfile(data user.Core) ResponseDashboard {
+	return ResponseDashboard{
+		ID:       data.ID,
+		Fullname: data.Fullname,
+	}
 }

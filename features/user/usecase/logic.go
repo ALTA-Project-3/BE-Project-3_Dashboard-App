@@ -68,3 +68,13 @@ func (usecase *userUsecase) PostData(data user.Core) int {
 
 	return row
 }
+
+func (usecase *userUsecase) GetProfile(id int) (user.Core, error) {
+
+	data, err := usecase.userData.SelectProfile(id)
+	if err != nil {
+		return user.Core{}, err
+	}
+
+	return data, nil
+}
