@@ -21,6 +21,7 @@ func New(e *echo.Echo, data user.UsecaseInterface) {
 	e.GET("/user", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.PUT("/user", handler.PutDataUser, middlewares.JWTMiddleware())
 	e.DELETE("/admin/:id", handler.DeleteDataUser, middlewares.JWTMiddleware())
+	e.POST("/admin", handler.PostDataUser, middlewares.JWTMiddleware())
 
 }
 
@@ -105,5 +106,26 @@ func (delivery *userDelivery) DeleteDataUser(c echo.Context) error {
 		return c.JSON(400, helper.FailedResponseHelper("failed to delete data"))
 	}
 
-	return c.JSON(400, helper.SuccessResponseHelper("success delete data"))
+	return c.JSON(200, helper.SuccessResponseHelper("success delete data"))
+}
+
+func (delivery *userDelivery) PostDataUser(c echo.Context) error {
+
+	var data Request
+	err := c.Bind(&data)
+	if err != nil || data.ID != 0 {
+		return c.JSON(400, helper.FailedResponseHelper("error bind and id cannot be filled"))
+	}
+
+	idToken := middlewares.ExtractToken(c)
+	if idToken != 1 {
+		return c.JSON(400, helper.FailedResponseHelper("not have access"))
+	}
+
+	row := delivery.userUsecase.PostData(data.toCoreReq())
+	if row == -1 || row == 0 {
+		return c.JSON(400, helper.FailedResponseHelper("failed post data"))
+	}
+
+	return c.JSON(200, helper.SuccessResponseHelper("success insert data"))
 }

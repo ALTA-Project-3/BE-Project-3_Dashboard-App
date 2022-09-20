@@ -60,3 +60,14 @@ func (repo *dataUser) DelData(id int) int {
 
 	return int(tx.RowsAffected)
 }
+
+func (repo *dataUser) InsertData(data user.Core) int {
+
+	var dataInsert = fromCore(data)
+	tx := repo.db.Create(&dataInsert)
+	if tx.Error != nil {
+		return -1
+	}
+
+	return int(tx.RowsAffected)
+}
