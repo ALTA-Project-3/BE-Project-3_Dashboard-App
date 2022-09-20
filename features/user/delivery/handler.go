@@ -22,6 +22,7 @@ func New(e *echo.Echo, data user.UsecaseInterface) {
 	e.PUT("/users", handler.PutDataUser, middlewares.JWTMiddleware())
 	e.DELETE("/admin/:id", handler.DeleteDataUser, middlewares.JWTMiddleware())
 	e.POST("/admin", handler.PostDataUser, middlewares.JWTMiddleware())
+	e.GET("/user/profile", handler.GetProfileUser, middlewares.JWTMiddleware())
 
 }
 
@@ -129,4 +130,16 @@ func (delivery *userDelivery) PostDataUser(c echo.Context) error {
 	}
 
 	return c.JSON(200, helper.SuccessResponseHelper("success insert data"))
+}
+
+func (delivery *userDelivery) GetProfileUser(c echo.Context) error {
+
+	idToken := middlewares.ExtractToken(c)
+
+	data, err := delivery.userUsecase.GetProfile(idToken)
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper("failed get profile"))
+	}
+
+	return c.JSON(200, helper.SuccessDataResponseHelper("success get profile", toProfile(data)))
 }

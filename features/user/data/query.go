@@ -71,3 +71,14 @@ func (repo *dataUser) InsertData(data user.Core) int {
 
 	return int(tx.RowsAffected)
 }
+
+func (repo *dataUser) SelectProfile(id int) (user.Core, error) {
+
+	var data user.Core
+	tx := repo.db.First(&data, "id = ? ", id)
+	if tx.Error != nil {
+		return user.Core{}, tx.Error
+	}
+
+	return data, nil
+}
