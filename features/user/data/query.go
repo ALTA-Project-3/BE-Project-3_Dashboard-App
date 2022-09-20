@@ -19,14 +19,22 @@ func New(db *gorm.DB) user.DataInterface {
 
 func (repo *dataUser) SelectAll(page, token int) ([]user.Core, error) {
 
-	perPage := 8
+	perPage := 5
 	offset := ((page - 1) * perPage)
 	queryBuider := repo.db.Limit(perPage).Offset(offset)
 
 	var data []User
-	tx := queryBuider.Find(&data).Order("fullname ASC")
-	if tx.Error != nil {
-		return nil, tx.Error
+
+	if page > 0 {
+		tx1 := queryBuider.Find(&data).Order("fullname ASC")
+		if tx1.Error != nil {
+			return nil, tx1.Error
+		}
+	} else {
+		tx2 := repo.db.Find(&data).Order("fullname ASC")
+		if tx2.Error != nil {
+			return nil, tx2.Error
+		}
 	}
 
 	for _, v := range data {
@@ -75,7 +83,7 @@ func (repo *dataUser) InsertData(data user.Core) int {
 func (repo *dataUser) SelectProfile(id int) (user.Core, error) {
 
 	var data user.Core
-	tx := repo.db.First(&data, "id = ? ", id)
+	tx := repo.db.First(&data, id)
 	if tx.Error != nil {
 		return user.Core{}, tx.Error
 	}

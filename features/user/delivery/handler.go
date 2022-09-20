@@ -28,6 +28,9 @@ func New(e *echo.Echo, data user.UsecaseInterface) {
 
 func (delivery *userDelivery) GetAllUser(c echo.Context) error {
 	param := c.QueryParam("page")
+	if param == "" {
+		param = "0"
+	}
 	page, err := strconv.Atoi(param)
 	if err != nil {
 		return c.JSON(400, helper.FailedResponseHelper("query param must be number"))
