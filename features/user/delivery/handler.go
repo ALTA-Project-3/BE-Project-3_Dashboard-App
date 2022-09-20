@@ -80,6 +80,7 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 		}
 	}
 
+	updateData.ID = update.ID
 	row := delivery.userUsecase.PutData(updateData)
 	if row == -1 {
 		return c.JSON(400, helper.FailedResponseHelper("failed to update data"))
