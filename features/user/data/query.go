@@ -82,11 +82,11 @@ func (repo *dataUser) InsertData(data user.Core) int {
 
 func (repo *dataUser) SelectProfile(id int) (user.Core, error) {
 
-	var data user.Core
+	var data User
 	tx := repo.db.First(&data, id)
 	if tx.Error != nil {
 		return user.Core{}, tx.Error
 	}
 
-	return data, nil
+	return data.toCore(), nil
 }
