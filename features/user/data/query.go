@@ -42,7 +42,7 @@ func (repo *dataUser) UpdateData(data user.Core) int {
 
 	newData := fromCore(data)
 
-	tx := repo.db.Model(&User{}).Where("id = ? ", data.ID).Updates(&newData)
+	tx := repo.db.Model(&User{}).Where("id = ? ", data.ID).Updates(newData)
 	if tx.Error != nil {
 		return -1
 	}
