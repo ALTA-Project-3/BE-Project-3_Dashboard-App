@@ -33,6 +33,10 @@ func (usecase *userUsecase) PutData(data user.Core) int {
 		data.Password = string(hash)
 	}
 
+	if data.Role == "Admin" {
+		data.Role = "admin"
+	}
+
 	row := usecase.userData.UpdateData(data)
 	if row == -1 {
 		return -1
