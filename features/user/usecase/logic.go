@@ -58,6 +58,10 @@ func (usecase *userUsecase) PostData(data user.Core) int {
 		return -1
 	}
 
+	if data.Role == "Admin" {
+		data.Role = "admin"
+	}
+
 	hash, _ := bcrypt.GenerateFromPassword([]byte(data.Password), bcrypt.DefaultCost)
 	data.Password = string(hash)
 

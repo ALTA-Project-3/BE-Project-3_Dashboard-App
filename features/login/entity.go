@@ -4,6 +4,7 @@ type Core struct {
 	ID       uint
 	Email    string
 	Password string
+	Role     string
 }
 
 type UsecaseInterface interface {
