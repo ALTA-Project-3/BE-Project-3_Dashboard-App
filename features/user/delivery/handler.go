@@ -78,7 +78,7 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 		updateData.Team = update.Team
 	}
 
-	if role != "admin" {
+	if role != "Admin" {
 		if update.Role != "" || update.Status != "" || update.Team != "" || update.ID != uint(idToken) {
 			return c.JSON(400, helper.FailedResponseHelper("not have access edit role, status and team"))
 		}
@@ -96,7 +96,7 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 func (delivery *userDelivery) DeleteDataUser(c echo.Context) error {
 
 	_, role := middlewares.ExtractToken(c)
-	if role != "admin" {
+	if role != "Admin" {
 		return c.JSON(400, helper.FailedResponseHelper("not have access"))
 	}
 
@@ -123,7 +123,7 @@ func (delivery *userDelivery) PostDataUser(c echo.Context) error {
 	}
 
 	_, role := middlewares.ExtractToken(c)
-	if role != "admin" {
+	if role != "Admin" {
 		return c.JSON(400, helper.FailedResponseHelper("not have access"))
 	}
 

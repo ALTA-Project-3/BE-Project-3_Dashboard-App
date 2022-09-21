@@ -33,8 +33,8 @@ func (usecase *userUsecase) PutData(data user.Core) int {
 		data.Password = string(hash)
 	}
 
-	if data.Role == "Admin" {
-		data.Role = "admin"
+	if data.Role == "admin" {
+		data.Role = "Admin"
 	}
 
 	row := usecase.userData.UpdateData(data)
@@ -62,8 +62,8 @@ func (usecase *userUsecase) PostData(data user.Core) int {
 		return -1
 	}
 
-	if data.Role == "Admin" {
-		data.Role = "admin"
+	if data.Role == "admin" {
+		data.Role = "Admin"
 	}
 
 	hash, _ := bcrypt.GenerateFromPassword([]byte(data.Password), bcrypt.DefaultCost)
