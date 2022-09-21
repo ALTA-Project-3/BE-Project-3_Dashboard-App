@@ -36,7 +36,7 @@ func (delivery *userDelivery) GetAllUser(c echo.Context) error {
 		return c.JSON(400, helper.FailedResponseHelper("query param must be number"))
 	}
 
-	idToken := middlewares.ExtractToken(c)
+	idToken, _ := middlewares.ExtractToken(c)
 
 	data, errGet := delivery.userUsecase.GetAll(page, idToken)
 	if errGet != nil {
@@ -50,7 +50,7 @@ func (delivery *userDelivery) GetAllUser(c echo.Context) error {
 
 func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 
-	idToken := middlewares.ExtractToken(c)
+	idToken, role := middlewares.ExtractToken(c)
 
 	var update Request
 	err := c.Bind(&update)
@@ -78,7 +78,7 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 		updateData.Team = update.Team
 	}
 
-	if idToken != 1 {
+	if role != "admin" {
 		if update.Role != "" || update.Status != "" || update.Team != "" || update.ID != uint(idToken) {
 			return c.JSON(400, helper.FailedResponseHelper("not have access edit role, status and team"))
 		}
@@ -95,8 +95,8 @@ func (delivery *userDelivery) PutDataUser(c echo.Context) error {
 
 func (delivery *userDelivery) DeleteDataUser(c echo.Context) error {
 
-	idToken := middlewares.ExtractToken(c)
-	if idToken != 1 {
+	_, role := middlewares.ExtractToken(c)
+	if role != "admin" {
 		return c.JSON(400, helper.FailedResponseHelper("not have access"))
 	}
 
@@ -122,8 +122,8 @@ func (delivery *userDelivery) PostDataUser(c echo.Context) error {
 		return c.JSON(400, helper.FailedResponseHelper("error bind and id cannot be filled"))
 	}
 
-	idToken := middlewares.ExtractToken(c)
-	if idToken != 1 {
+	_, role := middlewares.ExtractToken(c)
+	if role != "admin" {
 		return c.JSON(400, helper.FailedResponseHelper("not have access"))
 	}
 
@@ -137,7 +137,7 @@ func (delivery *userDelivery) PostDataUser(c echo.Context) error {
 
 func (delivery *userDelivery) GetProfileUser(c echo.Context) error {
 
-	idToken := middlewares.ExtractToken(c)
+	idToken, _ := middlewares.ExtractToken(c)
 
 	data, err := delivery.userUsecase.GetProfile(idToken)
 	if err != nil {
