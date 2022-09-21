@@ -26,12 +26,12 @@ func (repo *dataUser) SelectAll(page, token int) ([]user.Core, error) {
 	var data []User
 
 	if page > 0 {
-		tx1 := queryBuider.Find(&data).Order("fullname ASC")
+		tx1 := queryBuider.Unscoped().Find(&data).Order("fullname ASC")
 		if tx1.Error != nil {
 			return nil, tx1.Error
 		}
 	} else {
-		tx2 := repo.db.Find(&data).Order("fullname ASC")
+		tx2 := repo.db.Unscoped().Find(&data).Order("fullname ASC")
 		if tx2.Error != nil {
 			return nil, tx2.Error
 		}
@@ -61,7 +61,8 @@ func (repo *dataUser) UpdateData(data user.Core) int {
 
 func (repo *dataUser) DelData(id int) int {
 
-	tx := repo.db.Unscoped().Where("id = ? ", id).Delete(&User{})
+	repo.db.Model(&User{}).Where("id = ? ", id).Update("status", "deleted")
+	tx := repo.db.Where("id = ? ", id).Delete(&User{})
 	if tx.Error != nil {
 		return -1
 	}

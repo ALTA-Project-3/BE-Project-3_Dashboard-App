@@ -4,6 +4,7 @@ import (
 	"project/dashboard/features/mentee"
 	"project/dashboard/middlewares"
 	"project/dashboard/utils/helper"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -18,6 +19,7 @@ func New(e *echo.Echo, data mentee.UsecaseInterface) {
 	}
 
 	e.POST("/user/mentee", handler.PostDataMentee, middlewares.JWTMiddleware())
+	e.GET("/user/mentee", handler.GetMenteeList, middlewares.JWTMiddleware())
 
 }
 
@@ -41,4 +43,29 @@ func (delivery *menteeDelivery) PostDataMentee(c echo.Context) error {
 	}
 
 	return c.JSON(200, helper.SuccessResponseHelper("success insert data mentee"))
+}
+
+func (delivery *menteeDelivery) GetMenteeList(c echo.Context) error {
+
+	param := c.QueryParam("page")
+	if param == "" {
+		param = "0"
+	}
+	page, err := strconv.Atoi(param)
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper("param page must be number"))
+	}
+	class := c.QueryParam("class")
+	category := c.QueryParam("category")
+	status := c.QueryParam("status")
+
+	idToken, _ := middlewares.ExtractToken(c)
+
+	data, errGet := delivery.menteeUsecase.GetData(page, idToken)
+	if errGet != nil {
+		return c.JSON(400, helper.FailedResponseHelper("failed to get all mentee"))
+	}
+
+	dataRes := toResponList(data, class, category, status)
+	return c.JSON(200, helper.SuccessDataResponseHelper("succes get all mentee", dataRes))
 }
