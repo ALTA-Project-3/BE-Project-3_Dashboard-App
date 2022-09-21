@@ -12,7 +12,7 @@ type Class struct {
 	StartDate string
 	EndDate   string
 	UserID    uint
-	Mentee    []Mentee `gorm:"foreignKey:ClassID"`
+	Mentee    []Mentee
 }
 
 type Mentee struct {

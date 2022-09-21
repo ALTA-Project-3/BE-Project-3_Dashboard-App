@@ -28,3 +28,13 @@ func (usecase *menteeUsecase) PostData(data mentee.MenteeCore, idToken int) int 
 	return row
 
 }
+
+func (usecase *menteeUsecase) GetData(page, idToken int) ([]mentee.Join, error) {
+
+	data, err := usecase.menteeData.SelectData(page, idToken)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
