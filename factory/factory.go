@@ -15,6 +15,10 @@ import (
 	classData "project/dashboard/features/class/data"
 	classDelivery "project/dashboard/features/class/delivery"
 	classUsecase "project/dashboard/features/class/usecase"
+
+	menteeData "project/dashboard/features/mentee/data"
+	menteeDelivery "project/dashboard/features/mentee/delivery"
+	menteeUsecase "project/dashboard/features/mentee/usecase"
 )
 
 func InitFactory(e *echo.Echo, db *gorm.DB) {
@@ -29,4 +33,8 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	classDataFactory := classData.New(db)
 	classUsecaseFactory := classUsecase.New(classDataFactory)
 	classDelivery.New(e, classUsecaseFactory)
+
+	menteeDataFactory := menteeData.New(db)
+	menteeUsecaseFactory := menteeUsecase.New(menteeDataFactory)
+	menteeDelivery.New(e, menteeUsecaseFactory)
 }
