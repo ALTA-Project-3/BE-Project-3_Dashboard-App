@@ -8,7 +8,7 @@ type MenteeCore struct {
 	Email         string
 	Gender        string
 	Telegram      string
-	Phone         uint64
+	Phone         string
 	EmergencyData EmergencyCore
 	Education     EducationCore
 	ClassID       uint
@@ -19,7 +19,7 @@ type MenteeCore struct {
 type EmergencyCore struct {
 	ID     uint
 	Name   string
-	Phone  uint64
+	Phone  string
 	Status string
 }
 

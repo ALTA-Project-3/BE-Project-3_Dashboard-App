@@ -15,7 +15,7 @@ type ResponseDashboard struct {
 	ID               uint   `json:"id"`
 	Fullname         string `json:"fullname"`
 	Role             string `json:"role"`
-	RegisterinMonth  int    `json:"registerInMonth"`
+	ActiveinMonth    int    `json:"registerInMonth"`
 	PlacementinMonth int    `json:"placementInMonth"`
 	GraduateinMonth  int    `json:"graduateInMonth"`
 	Menteeactive     int    `json:"menteeActive"`
