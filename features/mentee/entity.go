@@ -30,10 +30,21 @@ type EducationCore struct {
 	Graduate string
 }
 
+type Join struct {
+	ID       uint
+	Name     string
+	Class    string
+	Status   string
+	Category string
+	Gender   string
+}
+
 type DataInterface interface {
 	InsertData(data MenteeCore, idToken int) int
+	SelectData(page, idToken int) ([]Join, error)
 }
 
 type UsecaseInterface interface {
 	PostData(data MenteeCore, idToken int) int
+	GetData(page, idToken int) ([]Join, error)
 }

@@ -18,6 +18,7 @@ type Mentee struct {
 	EmergencyData Emergency
 	Education     Education
 	ClassID       uint
+	Class         Class `gorm:"foreignKey:ClassID;references:ID"`
 	StatusMentee  string
 }
 

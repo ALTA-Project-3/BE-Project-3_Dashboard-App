@@ -14,6 +14,15 @@ type User struct {
 	Team     string
 	Role     string
 	Status   string
+	Class    []Class
+}
+
+type Class struct {
+	gorm.Model
+	Name      string
+	StartDate string
+	EndDate   string
+	UserID    uint
 }
 
 func (data *User) toCore() user.Core {
