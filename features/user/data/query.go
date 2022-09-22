@@ -93,11 +93,11 @@ func (repo *dataUser) SelectProfile(id int) (user.Core, user.DashBoard, error) {
 	Act := "Active"
 	Plc := "Placement"
 	Grd := "Graduate"
-	txCount := repo.db.Model(&Mentee{}).Where("status_mentee = ?", Act).Count(&count.Active)
+	txCount := repo.db.Model(&Mentee{}).Where("status_mentee = ? AND deleted_at IS NULL", Act).Count(&count.Active)
 	if txCount.Error != nil {
 		return user.Core{}, user.DashBoard{}, txCount.Error
 	}
-	txCount2 := repo.db.Model(&Mentee{}).Where("status_mentee = ?", Plc).Count(&count.Placement)
+	txCount2 := repo.db.Model(&Mentee{}).Where("status_mentee = ? AND deleted_at IS NULL", Plc).Count(&count.Placement)
 	if txCount2.Error != nil {
 		return user.Core{}, user.DashBoard{}, txCount.Error
 	}
