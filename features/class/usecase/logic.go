@@ -49,7 +49,7 @@ func (Service *Service) DeleteAClass(userid, classid uint) (string, error) {
 	return msg, err
 }
 
-// func (Service *Service) GetToken(email, password string) (string, error) {
-// 	str, err := Service.do.GetToken(email, password)
-// 	return str, err
-// }
+func (Service *Service) GetToken(email, password string) (string, error) {
+	str, err := Service.do.GetToken(email, password)
+	return str, err
+}

@@ -2,6 +2,7 @@ package data
 
 import (
 	"project/dashboard/features/mentee"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -39,8 +40,8 @@ type Education struct {
 type Class struct {
 	gorm.Model
 	Name      string
-	StartDate string
-	EndDate   string
+	StartDate time.Time
+	EndDate   time.Time
 	UserID    uint
 	Mentee    []Mentee `gorm:"foreignKey:ClassID"`
 }

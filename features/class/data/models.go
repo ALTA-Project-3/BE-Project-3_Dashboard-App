@@ -2,15 +2,18 @@ package data
 
 import (
 	"project/dashboard/features/class"
+	"time"
 
 	"gorm.io/gorm"
 )
 
+var layoutFormat = "January"
+
 type Class struct {
 	gorm.Model
 	Name      string
-	StartDate string
-	EndDate   string
+	StartDate time.Time
+	EndDate   time.Time
 	UserID    uint
 	Mentee    []Mentee
 }
@@ -28,6 +31,7 @@ type Mentee struct {
 }
 
 func CoreToModel(data class.CoreClass) Class {
+
 	return Class{
 		Name:      data.Name,
 		StartDate: data.StartDate,
@@ -37,6 +41,7 @@ func CoreToModel(data class.CoreClass) Class {
 }
 
 func ModelToCore(data Class) class.CoreClass {
+
 	return class.CoreClass{
 		ID:        data.ID,
 		Name:      data.Name,
@@ -55,9 +60,9 @@ func ListToCore(data []Class) []class.CoreClass {
 	return list
 }
 
-// type User struct {
-// 	gorm.Model
-// 	Email    string `json:"email" form:"email"`
-// 	Password string `json:"password" form:"password"`
-// 	role     string
-// }
+type User struct {
+	gorm.Model
+	Email    string `json:"email" form:"email"`
+	Password string `json:"password" form:"password"`
+	role     string
+}

@@ -3,6 +3,7 @@ package data
 import (
 	"errors"
 	"project/dashboard/features/class"
+	"project/dashboard/middlewares"
 
 	"gorm.io/gorm"
 )
@@ -70,17 +71,17 @@ func (storage *Storage) DeleteAClass(classid uint) (string, error) {
 	return "Sukses Menghapus Data", nil
 }
 
-// func (storage *Storage) GetToken(email, password string) (string, error) {
-// 	var datauser User
-// 	tx := storage.query.Where("email = ? and password = ?", email, password).First(&datauser)
-// 	if tx.Error != nil {
-// 		return "", tx.Error
-// 	}
+func (storage *Storage) GetToken(email, password string) (string, error) {
+	var datauser User
+	tx := storage.query.Where("email = ? and password = ?", email, password).First(&datauser)
+	if tx.Error != nil {
+		return "", tx.Error
+	}
 
-// 	token, err := middlewares.CreateToken(int(datauser.ID), datauser.role)
-// 	if err != nil {
-// 		return "", err
-// 	}
+	token, err := middlewares.CreateToken(int(datauser.ID), datauser.role)
+	if err != nil {
+		return "", err
+	}
 
-// 	return token, nil
-// }
+	return token, nil
+}

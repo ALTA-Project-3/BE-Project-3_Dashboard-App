@@ -1,12 +1,15 @@
 package delivery
 
-import "project/dashboard/features/class"
+import (
+	"project/dashboard/features/class"
+	"time"
+)
 
 type Response struct {
 	ID        uint
 	Name      string
-	StartDate string
-	EndDate   string
+	StartDate time.Time
+	EndDate   time.Time
 	UserID    uint
 }
 

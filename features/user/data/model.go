@@ -2,6 +2,7 @@ package data
 
 import (
 	"project/dashboard/features/user"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -24,8 +25,8 @@ type Mentee struct {
 type Class struct {
 	gorm.Model
 	Name      string
-	StartDate string
-	EndDate   string
+	StartDate time.Time
+	EndDate   time.Time
 	UserID    uint
 }
 
