@@ -139,10 +139,10 @@ func (delivery *userDelivery) GetProfileUser(c echo.Context) error {
 
 	idToken, _ := middlewares.ExtractToken(c)
 
-	data, err := delivery.userUsecase.GetProfile(idToken)
+	data, count, err := delivery.userUsecase.GetProfile(idToken)
 	if err != nil {
 		return c.JSON(400, helper.FailedResponseHelper("failed get profile"))
 	}
 
-	return c.JSON(200, helper.SuccessDataResponseHelper("success get profile", toProfile(data)))
+	return c.JSON(200, helper.SuccessDataResponseHelper("success get profile", toProfile(data, count)))
 }

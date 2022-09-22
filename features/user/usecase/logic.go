@@ -77,12 +77,12 @@ func (usecase *userUsecase) PostData(data user.Core) int {
 	return row
 }
 
-func (usecase *userUsecase) GetProfile(id int) (user.Core, error) {
+func (usecase *userUsecase) GetProfile(id int) (user.Core, user.DashBoard, error) {
 
-	data, err := usecase.userData.SelectProfile(id)
+	data, count, err := usecase.userData.SelectProfile(id)
 	if err != nil {
-		return user.Core{}, err
+		return user.Core{}, user.DashBoard{}, err
 	}
 
-	return data, nil
+	return data, count, nil
 }

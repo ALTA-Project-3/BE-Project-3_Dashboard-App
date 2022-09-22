@@ -93,35 +93,4 @@ func (repo *dataMentee) SelectData(page, idToken int) ([]mentee.Join, error) {
 
 	return res, nil
 
-	// var data []mentee.Join
-	// if category != "" || class != "" || status != "" {
-	// 	if page != 0 {
-	// 		// tx := queryBuider.Model(&Class{}).Select("mentees.id, mentees.name, classes.name, mentees.status_mentee, educations.type, mentees.gender").Joins("left join mentees on mentees.class_id = classes.id").Joins("left join educations on educations.mentee_id = mentees.id").Where(where).Scan(&data)
-	// 		// if tx.Error != nil {
-	// 		// 	return nil, tx.Error
-	// 		// }
-	// 		// return data, nil
-	// 	} else if page == 0 {
-	// 		// tx := repo.db.Model(&Class{}).Select("mentees.id, mentees.name, classes.name, mentees.status_mentee, educations.type, mentees.gender").Joins("inner join mentees on mentees.class_id = classes.id").Joins("inner join educations on educations.mentee_id = mentees.id").Where(where).Scan(&data)
-	// 		// if tx.Error != nil {
-	// 		// 	return nil, tx.Error
-	// 		// }
-	// 		// return data, nil
-	// 	}
-	// } else {
-	// 	if page != 0 {
-	// 		tx := queryBuider.Unscoped().Model(&Class{}).Select("classes.name, mentees.id, mentees.name, mentees.status_mentee, mentees.gender, educations.type").Joins("left join mentees on mentees.class_id = classes.id").Joins("right join educations on educations.mentee_id = mentees.id").Scan(&data)
-	// 		if tx.Error != nil {
-	// 			return nil, tx.Error
-	// 		}
-	// 		return data, nil
-	// 	} else if page == 0 {
-	// 		tx := repo.db.Model(&Class{}).Select("mentees.id, mentees.name, classes.name, mentees.status_mentee, educations.type, mentees.gender").Joins("inner join mentees on mentees.class_id = classes.id").Joins("inner join educations on educations.mentee_id = mentees.id").Scan(&data)
-	// 		if tx.Error != nil {
-	// 			return nil, tx.Error
-	// 		}
-	// 		return data, nil
-	// 	}
-	// }
-
 }
