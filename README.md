@@ -13,7 +13,7 @@ A mini dashboard with the following features:
 5. User can delete data class and mentee
 6. User can update data user otority (fullname, email, and password)
 
-# You Can Try 
+# You Can Try Api
 1. open api : https://app.swaggerhub.com/apis-docs/nawihusen/groupproject3/1.0.0#/
 2. base url : https://tugas.website/
 
