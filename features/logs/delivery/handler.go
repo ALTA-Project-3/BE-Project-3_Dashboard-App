@@ -23,6 +23,7 @@ func New(e *echo.Echo, data logs.UsecaseInterface) {
 	}
 
 	e.POST("/user/mentee/log/:id", handler.AddFeedback, middlewares.JWTMiddleware())
+	e.GET("/user/mentee/:id", handler.GetMenteeProfile, middlewares.JWTMiddleware())
 }
 
 func (user *Delivery) AddFeedback(c echo.Context) error {
@@ -89,4 +90,20 @@ func (user *Delivery) AddFeedback(c echo.Context) error {
 	}
 
 	return c.JSON(200, helper.SuccessResponseHelper(msg))
+}
+
+func (user *Delivery) GetMenteeProfile(c echo.Context) error {
+	menteeid, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper("Parameter must be number"))
+	}
+	listlogs, listuser, mentee, education, msg, err := user.From.DetailMentee(uint(menteeid))
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper(msg))
+	}
+	listLogMentee := CoreToLogReslist(listlogs, listuser)
+	menteeData := CoreToRes(mentee, education)
+	// fmt.Println("=====================", menteeData)
+
+	return c.JSON(200, helper.SuccessDataResponseHelper2(msg, menteeData, listLogMentee))
 }
