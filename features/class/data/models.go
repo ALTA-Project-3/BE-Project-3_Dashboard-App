@@ -12,8 +12,6 @@ type Class struct {
 	StartDate string
 	EndDate   string
 	UserID    uint
-<<<<<<< HEAD
-=======
 	Mentee    []Mentee
 }
 
@@ -27,7 +25,6 @@ type Mentee struct {
 	Telegram    string
 	Phone       uint64
 	ClassID     uint
->>>>>>> 65270c09768d4b35f53e3095d4accdfa3dd10860
 }
 
 func CoreToModel(data class.CoreClass) Class {
