@@ -15,11 +15,10 @@ A mini dashboard with the following features:
 
 # You Can Try 
 1. open api : https://app.swaggerhub.com/apis-docs/nawihusen/groupproject3/1.0.0#/
-2. base url : https/tugas.website/
+2. base url : https://tugas.website/
 
 # Database Schema
-
-
+![project 3 drawio](https://user-images.githubusercontent.com/110234595/191723544-16dba9c2-9177-489f-bd3d-89b65d4490a5.png)
 
 
 # Contributor
