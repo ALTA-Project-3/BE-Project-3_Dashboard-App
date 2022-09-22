@@ -41,5 +41,8 @@ func (usecase *menteeUsecase) GetData(page, idToken int) ([]mentee.Join, error) 
 
 func (usecase *menteeUsecase) UpdateData(data mentee.MenteeCore, menteeid int) (string, error) {
 	msg, err := usecase.menteeData.UpdateData(data, menteeid)
-	return msg, err
+	if err != nil {
+		return "", err
+	}
+	return msg, nil
 }

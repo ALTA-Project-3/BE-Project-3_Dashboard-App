@@ -121,5 +121,5 @@ func (repo *dataMentee) UpdateData(data mentee.MenteeCore, menteeid int) (string
 		return "Gagal Update Pada Education", txEducation.Error
 	}
 
-	return "Sukses Mengupdate Sumua Data", nil
+	return "Sukses Mengupdate Semua Data", nil
 }
