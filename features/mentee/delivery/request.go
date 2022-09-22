@@ -9,7 +9,7 @@ type ReqCore struct {
 	Email         string       `json:"email" form:"email"`
 	Gender        string       `json:"gender" form:"gender"`
 	Telegram      string       `json:"telegram" form:"telegram"`
-	Phone         uint64       `json:"phone" form:"phone"`
+	Phone         string       `json:"phone" form:"phone"`
 	EmergencyData ReqEmergency `json:"emergencydata" form:"emergencydata"`
 	Education     ReqEducation `json:"educationdata" form:"educationdata"`
 	Class         string       `json:"class" form:"class"`
@@ -17,7 +17,7 @@ type ReqCore struct {
 
 type ReqEmergency struct {
 	Name   string `json:"name" form:"name"`
-	Phone  uint64 `json:"phone" form:"phone"`
+	Phone  string `json:"phone" form:"phone"`
 	Status string `json:"status" form:"status"`
 }
 

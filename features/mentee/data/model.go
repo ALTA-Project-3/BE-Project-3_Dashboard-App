@@ -14,7 +14,7 @@ type Mentee struct {
 	Email         string
 	Gender        string
 	Telegram      string
-	Phone         uint64
+	Phone         string
 	EmergencyData Emergency
 	Education     Education
 	ClassID       uint
@@ -25,7 +25,7 @@ type Mentee struct {
 type Emergency struct {
 	MenteeID uint `gorm:"primary_key"`
 	Name     string
-	Phone    uint64
+	Phone    string
 	Status   string
 }
 
