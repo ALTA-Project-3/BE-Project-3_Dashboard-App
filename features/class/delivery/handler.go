@@ -31,6 +31,9 @@ func (user *Delivery) AddClass(c echo.Context) error {
 	if errb != nil {
 		return c.JSON(400, helper.FailedResponseHelper("Wrong Data"))
 	}
+	if req.Name == "" {
+		return c.JSON(400, helper.FailedResponseHelper("Nama kelas wajib di isi"))
+	}
 	core := req.ReqToCore(uint(userid))
 
 	msg, err := user.From.CreateClass(core)
@@ -43,8 +46,16 @@ func (user *Delivery) AddClass(c echo.Context) error {
 
 func (user *Delivery) GetAllClass(c echo.Context) error {
 	// userid, _ := middlewares.ExtractToken(c)
+	param := c.QueryParam("page")
+	if param == "" {
+		param = "0"
+	}
+	page, err := strconv.Atoi(param)
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper("Harus Pakai Angka"))
+	}
 
-	listcore, err := user.From.GetAllClass()
+	listcore, err := user.From.GetAllClass(page)
 	if err != nil {
 		return c.JSON(400, helper.FailedResponseHelper("Terjadi Kesalahan"))
 	}

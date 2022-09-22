@@ -10,7 +10,7 @@ type CoreClass struct {
 
 type DataInterface interface {
 	InsertClass(core CoreClass) (string, error)
-	SelectAllClass() ([]CoreClass, error)
+	SelectAllClass(page int) ([]CoreClass, error)
 	UpdateAClass(core CoreClass, idclass uint) (string, error)
 	DeleteAClass(classid uint) (string, error)
 	GetClassUserid(classid uint) uint
@@ -19,7 +19,7 @@ type DataInterface interface {
 
 type UsecaseInterface interface {
 	CreateClass(core CoreClass) (string, error)
-	GetAllClass() ([]CoreClass, error)
+	GetAllClass(page int) ([]CoreClass, error)
 	EditAClass(core CoreClass, idclass uint) (string, error)
 	DeleteAClass(userid, classid uint) (string, error)
 	// GetToken(email, password string) (string, error)

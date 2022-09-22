@@ -20,8 +20,8 @@ func (Service *Service) CreateClass(core class.CoreClass) (string, error) {
 	return msg, err
 }
 
-func (Service *Service) GetAllClass() ([]class.CoreClass, error) {
-	listcore, err := Service.do.SelectAllClass()
+func (Service *Service) GetAllClass(page int) ([]class.CoreClass, error) {
+	listcore, err := Service.do.SelectAllClass(page)
 	return listcore, err
 }
 

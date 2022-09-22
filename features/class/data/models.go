@@ -12,19 +12,6 @@ type Class struct {
 	StartDate string
 	EndDate   string
 	UserID    uint
-	Mentee    []Mentee `gorm:"foreignKey:ClassID"`
-}
-
-type Mentee struct {
-	gorm.Model
-	Name        string
-	Address     string
-	Homeaddress string
-	Email       string
-	Gender      string
-	Telegram    string
-	Phone       uint64
-	ClassID     uint
 }
 
 func CoreToModel(data class.CoreClass) Class {
@@ -59,4 +46,5 @@ func ListToCore(data []Class) []class.CoreClass {
 // 	gorm.Model
 // 	Email    string `json:"email" form:"email"`
 // 	Password string `json:"password" form:"password"`
+// 	role     string
 // }
