@@ -61,7 +61,7 @@ func (repo *dataUser) UpdateData(data user.Core) int {
 
 func (repo *dataUser) DelData(id int) int {
 
-	repo.db.Model(&User{}).Where("id = ? ", id).Update("status", "deleted")
+	repo.db.Model(&User{}).Where("id = ? ", id).Update("status", "Deleted")
 	tx := repo.db.Where("id = ? ", id).Delete(&User{})
 	if tx.Error != nil {
 		return -1
