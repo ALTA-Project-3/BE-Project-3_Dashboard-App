@@ -103,7 +103,7 @@ func (user *Delivery) GetMenteeProfile(c echo.Context) error {
 	}
 	listLogMentee := CoreToLogReslist(listlogs, listuser)
 	menteeData := CoreToRes(mentee, education)
-	fmt.Println("=====================", menteeData)
+	// fmt.Println("=====================", menteeData)
 
 	return c.JSON(200, helper.SuccessDataResponseHelper2(msg, menteeData, listLogMentee))
 }

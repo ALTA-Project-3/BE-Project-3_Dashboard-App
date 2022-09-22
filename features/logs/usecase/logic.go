@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 	"project/dashboard/features/logs"
 )
 
@@ -26,28 +25,28 @@ func (service *Service) DetailMentee(menteeid uint) ([]logs.CoreLogs, []logs.Use
 		return nil, nil, logs.Mentee{}, logs.Education{}, msg1, err1
 	}
 
-	fmt.Println(listlogs)
+	// fmt.Println(listlogs)
 
 	listuser, msg2, err2 := service.do.SelectUserList(listlogs)
 	if err2 != nil {
 		return nil, nil, logs.Mentee{}, logs.Education{}, msg2, err2
 	}
 
-	fmt.Println(listuser)
+	// fmt.Println(listuser)
 
 	datamentee, msg3, err3 := service.do.SelectAMenteePrivateData(menteeid)
 	if err3 != nil {
 		return nil, nil, logs.Mentee{}, logs.Education{}, msg3, err3
 	}
 
-	fmt.Println(datamentee)
+	// fmt.Println(datamentee)
 
 	menteeeducation, msg4, err4 := service.do.SelectAMenteeEducation(menteeid)
 	if err4 != nil {
 		return nil, nil, logs.Mentee{}, logs.Education{}, msg4, err4
 	}
 
-	fmt.Println(menteeeducation)
+	// fmt.Println(menteeeducation)
 
 	return listlogs, listuser, datamentee, menteeeducation, "Sukses Mengakses Semua Data", nil
 }

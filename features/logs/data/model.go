@@ -65,8 +65,8 @@ func MentTologsMentee(data mentee.Mentee, classname string) logs.Mentee {
 		Name:     data.Name,
 		Email:    data.Email,
 		Telegram: data.Telegram,
-		// Phone:    data.Phone,
-		Class: classname,
+		Phone:    data.Phone,
+		Class:    classname,
 	}
 }
 
