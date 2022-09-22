@@ -59,4 +59,5 @@ func ListToCore(data []Class) []class.CoreClass {
 // 	gorm.Model
 // 	Email    string `json:"email" form:"email"`
 // 	Password string `json:"password" form:"password"`
+// 	role     string
 // }

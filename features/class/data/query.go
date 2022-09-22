@@ -28,9 +28,10 @@ func (storage *Storage) InsertClass(core class.CoreClass) (string, error) {
 
 }
 
-func (storage *Storage) SelectAllClass() ([]class.CoreClass, error) {
+func (storage *Storage) SelectAllClass(page int) ([]class.CoreClass, error) {
 	var model []Class
-	tx := storage.query.Find(&model)
+	count := 8 * (page - 1)
+	tx := storage.query.Limit(5).Offset(count).Find(&model)
 	if tx.Error != nil {
 		return []class.CoreClass{}, tx.Error
 	}
@@ -61,7 +62,7 @@ func (storage *Storage) UpdateAClass(core class.CoreClass, classid uint) (string
 }
 
 func (storage *Storage) DeleteAClass(classid uint) (string, error) {
-	tx := storage.query.Unscoped().Where("id = ? ", classid).Delete(&Class{})
+	tx := storage.query.Where("id = ? ", classid).Delete(&Class{})
 	if tx.Error != nil || tx.RowsAffected != 1 {
 		return "Gagal Menghapus Data", errors.New("error")
 	}
@@ -76,7 +77,7 @@ func (storage *Storage) DeleteAClass(classid uint) (string, error) {
 // 		return "", tx.Error
 // 	}
 
-// 	token, err := middlewares.CreateToken(int(datauser.ID))
+// 	token, err := middlewares.CreateToken(int(datauser.ID), datauser.role)
 // 	if err != nil {
 // 		return "", err
 // 	}
