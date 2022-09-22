@@ -10,8 +10,17 @@ type Core struct {
 	Status   string
 }
 
+type DashBoard struct {
+	Active           int64
+	Placement        int64
+	FeedBack         int64
+	ActiveInMonth    int64
+	PlacementInMonth int64
+	GraduateInMonth  int64
+}
+
 type DataInterface interface {
-	SelectProfile(id int) (Core, error)
+	SelectProfile(id int) (Core, DashBoard, error)
 	SelectAll(page, token int) ([]Core, error)
 	UpdateData(data Core) int
 	DelData(id int) int
@@ -19,7 +28,7 @@ type DataInterface interface {
 }
 
 type UsecaseInterface interface {
-	GetProfile(id int) (Core, error)
+	GetProfile(id int) (Core, DashBoard, error)
 	GetAll(page, token int) ([]Core, error)
 	PutData(data Core) int
 	DeleteData(id int) int

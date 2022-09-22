@@ -17,12 +17,25 @@ type User struct {
 	Class    []Class
 }
 
+type Mentee struct {
+	StatusMentee string
+}
+
 type Class struct {
 	gorm.Model
 	Name      string
 	StartDate string
 	EndDate   string
 	UserID    uint
+}
+
+type Logs struct {
+	gorm.Model
+	UserID   uint
+	MenteeID uint
+	Status   string
+	Feedback string
+	Url      string
 }
 
 func (data *User) toCore() user.Core {

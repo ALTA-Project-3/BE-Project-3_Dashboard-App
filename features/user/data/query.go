@@ -81,13 +81,29 @@ func (repo *dataUser) InsertData(data user.Core) int {
 	return int(tx.RowsAffected)
 }
 
-func (repo *dataUser) SelectProfile(id int) (user.Core, error) {
+func (repo *dataUser) SelectProfile(id int) (user.Core, user.DashBoard, error) {
 
 	var data User
 	tx := repo.db.First(&data, id)
 	if tx.Error != nil {
-		return user.Core{}, tx.Error
+		return user.Core{}, user.DashBoard{}, tx.Error
 	}
 
-	return data.toCore(), nil
+	var count user.DashBoard
+	Act := "Active"
+	Plc := "Placement"
+	txCount := repo.db.Model(&Mentee{}).Where("status_mentee = ?", Act).Count(&count.Active)
+	if txCount.Error != nil {
+		return user.Core{}, user.DashBoard{}, txCount.Error
+	}
+	txCount2 := repo.db.Model(&Mentee{}).Where("status_mentee = ?", Plc).Count(&count.Placement)
+	if txCount2.Error != nil {
+		return user.Core{}, user.DashBoard{}, txCount.Error
+	}
+	txCount3 := repo.db.Model(&Logs{}).Count(&count.FeedBack)
+	if txCount3.Error != nil {
+		return user.Core{}, user.DashBoard{}, txCount.Error
+	}
+
+	return data.toCore(), count, nil
 }
