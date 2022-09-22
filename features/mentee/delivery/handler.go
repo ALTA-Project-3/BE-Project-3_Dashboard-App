@@ -20,6 +20,7 @@ func New(e *echo.Echo, data mentee.UsecaseInterface) {
 
 	e.POST("/user/mentee", handler.PostDataMentee, middlewares.JWTMiddleware())
 	e.GET("/user/mentee", handler.GetMenteeList, middlewares.JWTMiddleware())
+	e.PUT("/user/mentee/:id", handler.UpdateAMentee, middlewares.JWTMiddleware())
 
 }
 
@@ -68,4 +69,23 @@ func (delivery *menteeDelivery) GetMenteeList(c echo.Context) error {
 
 	dataRes := toResponList(data, class, category, status)
 	return c.JSON(200, helper.SuccessDataResponseHelper("succes get all mentee", dataRes))
+}
+
+func (delivery *menteeDelivery) UpdateAMentee(c echo.Context) error {
+	var req ReqCore
+	err := c.Bind(&req)
+	if err != nil {
+		return c.JSON(400, helper.FailedResponseHelper("gagal bind"))
+	}
+	idmentee, errs := strconv.Atoi(c.Param("id"))
+	if errs != nil {
+		c.JSON(400, helper.FailedResponseHelper("Param harus nomor"))
+	}
+
+	msg, errr := delivery.menteeUsecase.UpdateData(req.toCore(), idmentee)
+	if errr != nil {
+		return c.JSON(400, helper.FailedResponseHelper(msg))
+	}
+
+	return c.JSON(200, helper.SuccessResponseHelper(msg))
 }
