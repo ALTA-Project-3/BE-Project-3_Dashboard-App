@@ -94,3 +94,32 @@ func (repo *dataMentee) SelectData(page, idToken int) ([]mentee.Join, error) {
 	return res, nil
 
 }
+
+func (repo *dataMentee) UpdateData(data mentee.MenteeCore, menteeid int) (string, error) {
+
+	if data.Class != "" {
+		var id int
+		tx := repo.db.Model(&Class{}).Select("id").Where("name = ? ", data.Class).Scan(&id)
+		if tx.Error != nil {
+			return "Kelas Tidak Ditemukan", tx.Error
+		}
+		data.ClassID = uint(id)
+	}
+	// tx := storage.query.Model(&model).Where("id = ?", idproduct).Updates(model)
+
+	mentee, emergency, education := FromCore(data)
+	txMente := repo.db.Model(&mentee).Where("id = ?", menteeid).Updates(mentee)
+	if txMente.Error != nil {
+		return "Gagal Update Pada Data Mentee", txMente.Error
+	}
+	txEmergency := repo.db.Model(&emergency).Where("mentee_id = ?", menteeid).Updates(emergency)
+	if txEmergency.Error != nil {
+		return "Gagal Update Pada Emergency", txEmergency.Error
+	}
+	txEducation := repo.db.Model(&education).Where("mentee_id = ?", menteeid).Updates(education)
+	if txEducation.Error != nil {
+		return "Gagal Update Pada Education", txEducation.Error
+	}
+
+	return "Sukses Mengupdate Sumua Data", nil
+}

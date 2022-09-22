@@ -42,9 +42,11 @@ type Join struct {
 type DataInterface interface {
 	InsertData(data MenteeCore, idToken int) int
 	SelectData(page, idToken int) ([]Join, error)
+	UpdateData(data MenteeCore, menteeid int) (string, error)
 }
 
 type UsecaseInterface interface {
 	PostData(data MenteeCore, idToken int) int
 	GetData(page, idToken int) ([]Join, error)
+	UpdateData(data MenteeCore, menteeid int) (string, error)
 }
