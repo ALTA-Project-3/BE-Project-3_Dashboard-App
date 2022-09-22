@@ -21,18 +21,18 @@ type ResponseDashboard struct {
 	Menteeactive    int                `json:"menteeActive"`
 	MenteePlacement int                `json:"menteePlacement"`
 	MenteeFeedback  int                `json:"menteeFeedback"`
-	ActiveinMonth   []ResMonthActive   `json:"ActiveInMonth"`
+	ActiveinMonth   []ResMonthActive   `json:"activeInMonth"`
 	GraduateinMonth []ResMonthGraduate `json:"graduateInMonth"`
 }
 
 type ResMonthActive struct {
-	Month string
-	Count int
+	month string
+	count int
 }
 
 type ResMonthGraduate struct {
-	Month string
-	Count int
+	month string
+	count int
 }
 
 func toRespon(data user.Core) Response {
@@ -61,8 +61,8 @@ func toProfile(data user.Core, count user.DashBoard) ResponseDashboard {
 	for _, v := range count.ActiveInMonth {
 		var m = time.Month(v.Month)
 		Count1 = append(Count1, ResMonthActive{
-			Month: m.String(),
-			Count: int(v.Count),
+			month: m.String(),
+			count: int(v.Count),
 		})
 	}
 
@@ -70,8 +70,8 @@ func toProfile(data user.Core, count user.DashBoard) ResponseDashboard {
 	for _, v1 := range count.GraduateInMonth {
 		var m2 = time.Month(v1.Month)
 		Count2 = append(Count2, ResMonthGraduate{
-			Month: m2.String(),
-			Count: int(v1.Count),
+			month: m2.String(),
+			count: int(v1.Count),
 		})
 	}
 

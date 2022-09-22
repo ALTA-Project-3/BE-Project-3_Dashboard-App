@@ -106,11 +106,11 @@ func (repo *dataUser) SelectProfile(id int) (user.Core, user.DashBoard, error) {
 		return user.Core{}, user.DashBoard{}, txCount.Error
 	}
 
-	txGroup := repo.db.Raw("SELECT MONTH(classes.start_date) AS month, COUNT(mentees.id) AS count from classes left join mentees on mentees.class_id = classes.id where mentees.status_mentee = ? group by MONTH(classes.start_date)", Act).Scan(&count.ActiveInMonth)
+	txGroup := repo.db.Raw("SELECT MONTH(classes.start_date) AS month, COUNT(mentees.id) AS count from classes left join mentees on mentees.class_id = classes.id where mentees.status_mentee = ? AND mentees.deleted_at IS NULL group by MONTH(classes.start_date)", Act).Scan(&count.ActiveInMonth)
 	if txGroup.Error != nil {
 		return user.Core{}, user.DashBoard{}, txGroup.Error
 	}
-	txGroup2 := repo.db.Raw("SELECT MONTH(classes.end_date) AS month, COUNT(mentees.id) AS count from classes left join mentees on mentees.class_id = classes.id where mentees.status_mentee = ? group by MONTH(classes.end_date)", Grd).Scan(&count.GraduateInMonth)
+	txGroup2 := repo.db.Raw("SELECT MONTH(classes.end_date) AS month, COUNT(mentees.id) AS count from classes left join mentees on mentees.class_id = classes.id where mentees.status_mentee = ? AND mentees.deleted_at IS NULL group by MONTH(classes.end_date)", Grd).Scan(&count.GraduateInMonth)
 	if txGroup2.Error != nil {
 		return user.Core{}, user.DashBoard{}, txGroup2.Error
 	}
