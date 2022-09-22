@@ -5,12 +5,12 @@ import (
 )
 
 type ResponList struct {
-	ID       uint
-	Name     string
-	Class    string
-	Status   string
-	Category string
-	Gender   string
+	ID       uint   `json:"id"`
+	Name     string `json:"name"`
+	Class    string `json:"class"`
+	Status   string `json:"status"`
+	Category string `json:"category"`
+	Gender   string `json:"gender"`
 }
 
 func toRespon(data mentee.Join) ResponList {
