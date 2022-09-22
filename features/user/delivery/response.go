@@ -1,6 +1,9 @@
 package delivery
 
-import "project/dashboard/features/user"
+import (
+	"project/dashboard/features/user"
+	"time"
+)
 
 type Response struct {
 	ID       uint   `json:"id"`
@@ -12,15 +15,24 @@ type Response struct {
 }
 
 type ResponseDashboard struct {
-	ID               uint   `json:"id"`
-	Fullname         string `json:"fullname"`
-	Role             string `json:"role"`
-	Menteeactive     int    `json:"menteeActive"`
-	MenteePlacement  int    `json:"menteePlacement"`
-	MenteeFeedback   int    `json:"menteeFeedback"`
-	ActiveinMonth    int    `json:"registerInMonth"`
-	PlacementinMonth int    `json:"placementInMonth"`
-	GraduateinMonth  int    `json:"graduateInMonth"`
+	ID              uint               `json:"id"`
+	Fullname        string             `json:"fullname"`
+	Role            string             `json:"role"`
+	Menteeactive    int                `json:"menteeActive"`
+	MenteePlacement int                `json:"menteePlacement"`
+	MenteeFeedback  int                `json:"menteeFeedback"`
+	ActiveinMonth   []ResMonthActive   `json:"ActiveInMonth"`
+	GraduateinMonth []ResMonthGraduate `json:"graduateInMonth"`
+}
+
+type ResMonthActive struct {
+	Month string
+	Count int
+}
+
+type ResMonthGraduate struct {
+	Month string
+	Count int
 }
 
 func toRespon(data user.Core) Response {
@@ -44,15 +56,33 @@ func toResponList(data []user.Core) []Response {
 }
 
 func toProfile(data user.Core, count user.DashBoard) ResponseDashboard {
+
+	var Count1 []ResMonthActive
+	for _, v := range count.ActiveInMonth {
+		var m = time.Month(v.Month)
+		Count1 = append(Count1, ResMonthActive{
+			Month: m.String(),
+			Count: int(v.Count),
+		})
+	}
+
+	var Count2 []ResMonthGraduate
+	for _, v1 := range count.GraduateInMonth {
+		var m2 = time.Month(v1.Month)
+		Count2 = append(Count2, ResMonthGraduate{
+			Month: m2.String(),
+			Count: int(v1.Count),
+		})
+	}
+
 	return ResponseDashboard{
-		ID:               data.ID,
-		Fullname:         data.Fullname,
-		Role:             data.Role,
-		ActiveinMonth:    int(count.ActiveInMonth),
-		PlacementinMonth: int(count.PlacementInMonth),
-		GraduateinMonth:  int(count.GraduateInMonth),
-		Menteeactive:     int(count.Active),
-		MenteePlacement:  int(count.Placement),
-		MenteeFeedback:   int(count.FeedBack),
+		ID:              data.ID,
+		Fullname:        data.Fullname,
+		Role:            data.Role,
+		Menteeactive:    int(count.Active),
+		MenteePlacement: int(count.Placement),
+		MenteeFeedback:  int(count.FeedBack),
+		ActiveinMonth:   Count1,
+		GraduateinMonth: Count2,
 	}
 }

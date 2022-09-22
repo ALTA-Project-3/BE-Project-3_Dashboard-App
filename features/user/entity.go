@@ -11,12 +11,21 @@ type Core struct {
 }
 
 type DashBoard struct {
-	Active           int64
-	Placement        int64
-	FeedBack         int64
-	ActiveInMonth    int64
-	PlacementInMonth int64
-	GraduateInMonth  int64
+	Active          int64
+	Placement       int64
+	FeedBack        int64
+	ActiveInMonth   []MonthActive
+	GraduateInMonth []MonthGraduate
+}
+
+type MonthActive struct {
+	Month int64
+	Count int64
+}
+
+type MonthGraduate struct {
+	Month int64
+	Count int64
 }
 
 type DataInterface interface {
