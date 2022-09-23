@@ -2,7 +2,6 @@ package delivery
 
 import (
 	"project/dashboard/features/class"
-	"project/dashboard/features/user/data"
 	"project/dashboard/middlewares"
 	"project/dashboard/utils/helper"
 	"strconv"
@@ -18,7 +17,7 @@ func New(e *echo.Echo, data class.UsecaseInterface) {
 	handler := &Delivery{
 		From: data,
 	}
-	e.GET("/logan", handler.Token)
+	// e.GET("/logan", handler.Token)
 	e.POST("/user/class", handler.AddClass, middlewares.JWTMiddleware())
 	e.GET("/user/class", handler.GetAllClass, middlewares.JWTMiddleware())
 	e.PUT("/user/class/:id", handler.EditClass, middlewares.JWTMiddleware())
@@ -103,16 +102,16 @@ func (user *Delivery) DeleteAClass(c echo.Context) error {
 	return c.JSON(200, helper.SuccessResponseHelper(msg))
 }
 
-func (user *Delivery) Token(c echo.Context) error {
-	var login data.User
-	errb := c.Bind(&login)
-	if errb != nil {
-		c.JSON(400, helper.FailedResponseHelper("Gagal"))
-	}
-	token, err := user.From.GetToken(login.Email, login.Password)
-	if err != nil {
-		return c.JSON(400, helper.FailedResponseHelper("gagal"))
-	}
+// func (user *Delivery) Token(c echo.Context) error {
+// 	var login data.User
+// 	errb := c.Bind(&login)
+// 	if errb != nil {
+// 		c.JSON(400, helper.FailedResponseHelper("Gagal"))
+// 	}
+// 	token, err := user.From.GetToken(login.Email, login.Password)
+// 	if err != nil {
+// 		return c.JSON(400, helper.FailedResponseHelper("gagal"))
+// 	}
 
-	return c.JSON(200, helper.SuccessDataResponseHelper("sukses", token))
-}
+// 	return c.JSON(200, helper.SuccessDataResponseHelper("sukses", token))
+// }

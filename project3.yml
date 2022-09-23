@@ -1,0 +1,1310 @@
+openapi: 3.0.0
+info:
+  title: Immersive App Project
+  description: Tugas Untuk Peserta Immersive
+  version: 1.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/nawihusen/groupproject3/1.0.0
+  - description: Api Dari Back End
+    url: https://tugas.website
+tags:
+  - name: Login
+    description: Login Page
+  - name: Admin (Manager)
+    description: List Manager Autority
+  - name: Users Autority
+    description: Users Autority
+  - name: Users Class Autority
+    description: List Autority Users for Class
+  - name: Users Mentee Autority
+    description: List Autority Users for A Mentee
+  
+paths:
+  /admin:
+    post:
+      tags:
+        - "Admin (Manager)"
+      security:
+        - JWTAuth: []
+      summary: Add A User
+      description: endpoint ini digunakan untuk menambahkan user oleh Manager
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforadduseradmin"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failedadduser"
+  /admin/{id}:
+    # put:
+    #   tags:
+    #     - "Admin (Manager)"
+    #   security:
+    #     - JWTAuth: []
+    #   summary: Update A User
+    #   description: endpoint ini digunakan untuk mengupdate data user 
+    #   parameters:
+    #     - $ref: "#/components/parameters/ParamId"
+    #   requestBody:
+    #     $ref: "#/components/requestBodies/requestbodyupdateuseradmin"
+    #   responses:
+    #     "200":
+    #       $ref: "#/components/responses/success"
+    #     "400":
+    #       $ref: "#/components/responses/failedupdateauser"
+    delete:
+      tags:
+        - "Admin (Manager)"
+      security:
+        - JWTAuth: []
+      summary: Delete A User
+      description: endpoint ini digunakan untuk melakukan delete oleh admin
+      parameters:
+        - $ref: "#/components/parameters/ParamId"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/faileddeleteauser"
+
+  /login:
+    post:
+      tags:
+        - "Login"
+      summary: User Login
+      description: endpoint ini digunakan untuk melakukan login oleh user yang terdaptar
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforlogin"
+      responses:
+        "200":
+          $ref: "#/components/responses/successgettoken"
+        "400":
+          $ref: "#/components/responses/failedgettoken"
+  /user/profile:
+    get:
+      tags:
+        - "Users Autority"
+      security:
+        - JWTAuth: []
+      summary: User Profile and some data
+      description: digunakan untuk mengambil data yang diperlukan pada halaman dashboard
+      responses:
+        "200":
+          $ref: "#/components/responses/getsomedata"
+        "400":
+          $ref: "#/components/responses/failed"
+        
+  /users:
+    put:
+      tags:
+        - "Users Autority"
+      security:
+        - JWTAuth: []
+      summary: User Update
+      description: digunakan oleh user untuk melakukan update pada fullname/email/password
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforupdate"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failedupdate"
+    get:
+      tags:
+        - "Users Autority"
+      security:
+        - JWTAuth: []
+      summary: Get All Users
+      description: Melihat semua data user yang terdaftar
+      responses:
+        "200": 
+          $ref: "#/components/responses/getalluser"
+        "400":
+          $ref: "#/components/responses/failed"
+
+  /user/class:
+    post:
+      tags:
+        - "Users Class Autority"
+      security:
+        - JWTAuth: []
+      summary: User Make A Class
+      description: digunakan untuk user yang ingin membuat Class
+      requestBody:
+        $ref:  "#/components/requestBodies/requestformakeclass"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failedmakeaclass"
+    get:
+      tags:
+        - "Users Class Autority"
+      security:
+        - JWTAuth: []
+      summary: Get All Class
+      description: Digunakan Untuk melihat semua class yang ada
+      responses:
+        "200":
+          $ref: "#/components/responses/getallclasssuccess"
+        "400":
+          $ref: "#/components/responses/getallclassfailed"
+
+  /user/class/{id}:
+    put:
+      tags:
+        - "Users Class Autority"
+      summary: Class Update
+      security:
+        - JWTAuth: []
+      description: digunakan untuk mengedit class yang dimiliki user
+      parameters:
+        - $ref: "#/components/parameters/ParamId"
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforupdateaclass"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failed"
+    delete:
+      tags:
+        - "Users Class Autority"
+      summary: Delete A Class
+      security:
+        - JWTAuth: []
+      description: digunakan untuk menghapus sebuah class yang ada
+      parameters:
+        - $ref: "#/components/parameters/ParamId"
+      responses:
+        "200":
+          $ref: "#/components/responses/successOperationNonData"
+        "400":
+          $ref: "#/components/responses/deleteDataByIdFailed"
+      
+  /user/mentee:
+    post:
+      tags:
+        - "Users Mentee Autority"
+      summary: Add Mentee To list
+      security:
+        - JWTAuth: []
+      description: digunakan untuk menambahkan mentee ke list
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforaddamentee"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failed"
+    get:
+      tags:
+        - "Users Mentee Autority"
+      summary: Get List Mentee
+      security:
+        - JWTAuth: []
+      description: digunakan untuk melihat semua mentee yang terdaftar
+      parameters:
+        - $ref: "#/components/parameters/ParamClassQuery"
+        - $ref: "#/components/parameters/ParamCategoryQuery"
+        - $ref: "#/components/parameters/ParamStatusQuery"
+      responses:
+        "200":
+          $ref: "#/components/responses/successgetmenteelist"
+        "400":
+          $ref: "#/components/responses/failed"
+  /user/mentee/{id}:
+    put:
+      tags:
+        - "Users Mentee Autority"
+      security:
+        - JWTAuth: []
+      summary: Update Mantee
+      description: digunakan untuk mengupdate data mentee
+      parameters:
+        - $ref: "#/components/parameters/ParamId"
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforupdatemantee"
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failedupdatementee"
+    get:
+      tags:
+        - "Users Mentee Autority"
+      summary: Get A Mantee Profile
+      description: digunakan untuk melihat data data dan log seorang mentee
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ParamId"
+      responses:
+        "200": 
+          $ref: "#/components/responses/getprofilementee"
+        "400":
+          $ref: "#/components/responses/failed"
+  /user/mentee/log/{id}:
+    post:
+      tags:
+        - "Users Mentee Autority"
+      summary: Add Log/Feedback To A Mentee
+      description: digunkan untuk menambahkan sebuah log pada seorang mentee berdasarkan idnya
+      security:
+        - JWTAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ParamId"
+      requestBody:
+        $ref: "#/components/requestBodies/requestbodyforaddlog"
+        
+      responses:
+        "200":
+          $ref: "#/components/responses/success"
+        "400":
+          $ref: "#/components/responses/failed"
+
+
+
+components:
+###################################
+## SCHEMA 
+##################################
+  schemas:
+    requestforadduser:
+      type: object
+      required:
+        - "fullname"
+        - "email"
+        - "team"
+      properties: 
+        fullname:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 6
+          description: email yang di input kan harus unique
+        team:
+          enum:
+            - Acedemic
+            - People
+            - Placement
+            - Admission
+        role:
+          default: Default
+          enum:
+            - Default
+            - Admin
+        status:
+          enum:
+            - Active
+            - Not-Active
+            - Deleted
+        password:
+          type: string
+          default: qwerty
+    updateauser:
+      type: object
+      properties:
+        team:
+          enum:
+            - Acedemic
+            - People
+            - Placement
+            - Admission
+        role:
+          default: Default
+          enum:
+            - Default
+            - Admin
+        status:
+          enum:
+            - Active
+            - Not-Active
+    requestlogin:
+      type: object
+      required:
+        - "email"
+        - "password"
+      properties:
+        email:
+          type: string
+          minLength: 10
+        password:
+          type: string
+          minLength: 1
+    responseNonData:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    responseloginwithdata:
+      type: object
+      properties:
+        code: 
+          type: integer
+        data:
+          type: object
+          properties:
+            ID:
+              type: integer
+            Name:
+              type: string
+            Token:
+              type: string
+            Role:
+              type: string
+        Message:
+          type: string            
+    requestforupdatde:
+      type: object
+      properties:
+        id:
+          type: integer
+        fullname:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 6
+        password:
+          type: string
+          minLength: 1
+        team:
+          type: string
+          minLength: 1
+        role:
+          type: string
+          minLength: 1
+        status:
+          type: string
+          minLength: 1
+    requestformakeaclass:
+      type: object
+      required:
+        - name
+        - start_date
+        - end_date
+      properties:
+        name: 
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+    responseforgetallclass:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              user_id:
+                type: integer
+              start_date:
+                type: string
+              end_date:
+                type: string
+        message: 
+          type: string
+    responseforgetalluser:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              fullname:
+                type: string
+              email:
+                type: string
+              team:
+                type: string
+              role:
+                type: string
+              status:
+                type: string
+    updateclass:
+        type: object
+        properties:
+          name:
+            type: string
+          start_date:
+            type: string
+          end_date:
+            type: string
+    addmentee:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        address:
+          type: string
+          minLength: 1
+        homeaddress:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
+        gender:
+          enum:
+            - male
+            - female
+        telegram:
+          type: string
+          minLength: 1
+        phone:
+          type: string
+          minLength: 1
+        discord:
+          type: string
+          minLength: 1
+        emergencydata:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+            phone:
+              type: string
+              minLength: 1
+            status:
+              enum:
+                - Orang Tua
+                - Saudara dari Orang Tua
+                - Kakek Nenek
+                - Saudara Kandung
+            class:
+              type: string
+              minLength: 1
+        educationdata:
+          type: object
+          properties:
+            type:
+              enum:
+                - informatics
+                - non-informatics
+            major:
+              type: string
+              minLength: 1
+            graduate:
+              type: string
+              minLength: 1
+    responforgetmenteesalah:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              phone:
+                type: integer
+              telegram:
+                type: string
+              discord:
+                type: string
+              email:
+                type: string
+              educationdata:
+                type: object
+                properties:
+                  # type:
+                  #   enum:
+                  #     - informatics
+                  #     - non-informatics
+                  major:
+                    type: string
+                    minLength: 1
+                  graduate:
+                    type: string
+                    minLength: 1
+              class:
+                type: object
+                properties:
+                  class_id:
+                    type: integer
+                  status:
+                    type: string
+        message: 
+          type: string
+    responforgetmentee:
+      description: Respon untuk Mendapatkan list Mentee
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              class:
+                type: string
+              status:
+                type: string
+              category:
+                type: string
+              gender:
+                type: string
+        message: 
+          type: string
+    requestforupdatestatus:
+      description: Feedback
+      type: object
+      required:
+        - "status"
+        - "feedback"
+      properties:
+        status:
+          type: string
+        feedback:
+          type: string
+    urlforsopport:
+      description: some url
+      type: object
+      required:
+        - "file"
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Just allower jpeg, jpg, pdf
+    schemaforprofile:
+      type: object
+      required:
+        - "name"
+        - "RegisterinMonth"
+        - "PlacementinMonth"
+        - "GraduateinMonth"
+        - "Menteeactive"
+        - "MenteePlacement"
+        - "MenteeFeedback"
+      properties:
+        name:
+          type: string
+          minLength: 1
+        RegisterinMonth:
+          type: integer
+        PlacementinMonth:
+          type: integer
+        GraduateinMonth:
+          type: integer
+        Menteeactive:
+          type: integer
+        MenteePlacement:
+          type: integer
+        MenteeFeedback:
+          type: integer
+    schemaforlogmentee:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        class:
+          type: string
+          minLength: 1
+        major:
+          type: string
+          minLength: 1
+        graduate:
+          type: string
+          minLength: 1
+        phone:
+          type: string
+          minLength: 1
+        telegram:
+          type: string
+          minLength: 1
+        discord:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
+        log:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+              feedback:
+                type: string
+              url:
+                type: string
+                format: binary
+              created_at:
+                type: string
+    # requestforupdateuser:
+################################
+## Request Body
+################################
+  requestBodies:
+    requestbodyforadduseradmin:
+        description: Data yang akan digunakan Sebagai data User
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/requestforadduser"
+            examples:
+              example1:
+                value:
+                  fullName: Nawi Husen
+                  email: nawi@gmail.com
+                  team: Academic
+                  role: Admin
+                  status: Active
+                  password: qwerty
+              example2:
+                value:
+                  fullName: Amin Rais
+                  email: amin@gmail.com
+                  team: People
+                  role: Admin
+                  status: Active
+                  password: qwerty
+              example3:
+                value:
+                  fullName: Contoh ketiga
+                  email: contoh3@gmail.com
+                  team: Placement
+                  role: Default
+                  status: Not-Active
+                  password: qwerty
+              example4:
+                value:
+                  fullName: Amin Rais
+                  email: amin@gmail.com
+                  team: Admission
+                  role: Default
+                  status: Deleted
+                  password: qwerty
+    requestbodyupdateuseradmin:
+      description: Data User yang akan di Update
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/updateauser"
+          examples:
+            example1:
+              value:
+                status: Not-Active
+            example2:
+              value:
+                team: Placement
+            example3:
+              value:
+                team: People
+                role: Admin
+            example4:
+              value:
+                status: Deleted
+    requestbodyforlogin:
+      description: Data yang Digunakan oleh User Untuk Melakukan Login
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/requestlogin"
+          example:
+            email: jack@gmail.com
+            password: qwerty
+    requestbodyforupdate:
+      description: Data yang akan di update
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/requestforupdatde"
+          examples:
+            example1:
+              value:
+                id: 1
+                fullname: namapanjangbaru
+                email: baru@gmail.com
+                password: newpassword
+                team: People
+                role: Admin
+            example2:
+              value:
+                id: 2
+                password: newpassword
+            example3:
+              value:
+                id: 3
+                fullname: jack
+                email: jack@gmail.com
+                password: jack
+            example4:
+              value:
+                id: 4
+                status: Deleted
+            example5:
+              value:
+                id: 5
+                team: Admission
+                role: Admin
+    requestformakeclass:
+      description: Data yang akan digunakan dalam membuat class
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/requestformakeaclass"
+          examples:
+            example1:
+              value:
+                name: Back End Engineer Batch 11
+                start_date: "2022-09-12"
+                end_date: "2022-12-01"
+            example2:
+              value:
+                name: Front End Engineer Batch 8
+                start_date: "2025-04-25"
+                end_date: "2025-12-28"
+                
+    requestbodyforupdateaclass:
+      description: data yang akan digunakan untuk melakukan update pada Class
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/updateclass"
+          examples:
+            example1:
+              value:
+                name: Back End Engineer Batch 13
+                end_date: september
+            example2:
+              value:
+                name: Front Ent Engineer Batch 15
+                start_date: januari
+                end_date: maret
+    requestbodyforaddamentee:
+      description: data yang akan digunakan sebagai data yang di miliki oleh mentee
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/addmentee"
+          examples:
+            example1:
+              value:
+                name: jack
+                address: indonesia
+                homeaddress: indonesia
+                email: jack@gmail.com
+                gender: male
+                telegram: jackjack
+                phone: 080808080808
+                class: BE11
+                emergencydata:
+                  name: namaayah
+                  phone: "1234567"
+                  status: Orang Tua                  
+                educationdata:
+                  type: informatics
+                  major: TI
+                  graduate: SMK 1 ...             
+    requestbodyforupdatemantee:
+      description: data yang akan di update adalah data yang di isi
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/addmentee"
+          examples:
+            example1:
+              value:
+                name: baru
+                address: newaddress
+                homeaddress: newadress
+                email: baru@gmail.com
+                phone: "123455"
+            example2:
+              value:
+                class:
+                  status: Join Class
+    requestbodyforaddlog:
+      description: data yang akan ditambahkan ke log seorang mentee
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/requestforupdatestatus"
+          examples:
+            example1:
+              value:
+                status: Join Class
+                feedback: lakukan....
+            example2:
+              value:
+                status: Eliminated
+                feedback: maaf ... 
+            example3:
+              value:
+                status: Graduated
+                feedback: selamat....
+            example4:
+              value:
+                status: Unit3
+                feedback: Selamat ...
+                url : kdjfhuhd.pdf
+            example5:
+              value:
+                status: Unit1
+                feedback: Selamat ...
+                url : kdjfhuhd.jpeg
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/urlforsopport"
+
+##############################
+# RESPONSE
+#############################
+  responses:
+    success:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          example:
+            code: 200
+            message: Success
+    failed:
+      description: Failed 
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          example:
+            code: 400
+            message: Failed
+    successgettoken:
+      description: Success With Response Data
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseloginwithdata"
+          example:
+            code: 200
+            data:
+              {
+                msg: Login Sukses,
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2Mzk2OTAwMjMsInJvbGUiOiJhZG1pbiIsInVzZXJJZCI6NH0.1Ij1ZVqpqPDOVXzaXyqcyNMlnbLTfwD28Byv0aWNjAQ,
+              }
+            message: Login Success
+    failedgettoken:
+      description: Gagal Login
+      content:
+        application/json:
+          schema:
+            $ref:  "#/components/schemas/responseNonData"
+          examples:
+            invalid email:
+              $ref: "#/components/examples/emailnotregistered"
+            invalid password:
+              $ref: "#/components/examples/invalidPassword"
+
+    failedadduser:
+      description: Failed Add New User
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+            Invalid Email:
+              $ref: "#/components/examples/invalidEmail"
+            Email Already Exist:
+              $ref: "#/components/examples/emailAlreadyExist"
+    failedupdateauser:
+      description: Failed Update User
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+            Invalid team:
+             $ref: "#/components/examples/invalidteam"
+            Invalid role:
+             $ref: "#/components/examples/invalidrole"
+            Invalid status:
+             $ref: "#/components/examples/invalidstatus"
+    faileddeleteauser:
+      description: Failed Delete User
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+            Invalid user:
+             $ref: "#/components/examples/invaliduser"
+    failedupdate:
+      description: Failed Update
+      content:
+        application/json:
+          schema: 
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+              emailalreadyexist:
+               $ref: "#/components/examples/emailAlreadyExist"
+    failedmakeaclass:
+      description: Failed To Make A Class
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          example:
+            code: 400
+            message: "Failed To Make A Class"
+    getallclasssuccess:
+      description: Get all class data
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseforgetallclass"
+          example:
+            data:
+              [
+                {
+                  id: 2,
+                  name: Back End Engineer Batch 11,
+                  user_id: 2,
+                  start_date: januari,
+                  end_date: maret,
+                },
+                {
+                  id: 7,
+                  name: Front Ent Engineer Batch 9,
+                  user_id: 3,
+                  start_date: agustus,
+                  end_date: ,
+                },
+              ]
+            message: Success
+    getallclassfailed:
+      description: Bad Request Response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+            Data Not Found:
+              $ref: "#/components/examples/dataNotFound"
+            Bad Request:
+              $ref: "#/components/examples/badRequest"
+    successOperationNonData:
+      description: Success Response Non Data
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          example:
+            code: 200
+            message: Success Operation
+    deleteDataByIdFailed:
+      description: Bad Request Response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+            Access Forbidden:
+              $ref: "#/components/examples/accessForbidden"
+            Invalid Id:
+              $ref: "#/components/examples/invalidId"
+            Data Not Found:
+              $ref: "#/components/examples/dataNotFound"
+    successgetmenteelist:
+      description: Get Mentee With Some Filter
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responforgetmentee"
+          example:
+            data:
+              [
+                {
+                id: 1,
+                name: nawi,
+                class: Back End Engineer Batch 11,
+                status: Active,
+                category: non-informatics,
+                gender: male
+                },
+                {
+                id: 4,
+                name: husen,
+                class: Front End Engineer Batch 11,
+                status: Graduate,
+                category: informatics,
+                gender: male
+                },
+              ]
+    failedupdatementee:
+      description: Failed Update Mentee
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseNonData"
+          examples:
+            Invalid Email:
+              $ref: "#/components/examples/invalidEmail"
+            Email Already Exist:
+              $ref: "#/components/examples/emailAlreadyExist"            
+    getalluser:
+      description: Get List User Yang Terdaftar
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseforgetalluser"
+          example:
+            data:
+              [
+                {
+                  id: 3,
+                  fullname: Full Name, 
+                  email: name@gmail.com,
+                  team: Academic,
+                  role: Admin, 
+                  status: Active,
+                },
+                {
+                  id: 5,
+                  fullname: Nama Lengkap, 
+                  email: lengkap@gmail.com,
+                  team: Placement,
+                  role: Default, 
+                  status: Not-Active,
+                },
+                {
+                  id: 7,
+                  fullname: Name Name, 
+                  email: nemu@gmail.com,
+                  team: People,
+                  role: Default, 
+                  status: Delete,
+                },
+              ]
+    getsomedata:
+      description: Get User Profile
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/schemaforprofile"
+          example:
+            name: John Doe
+            RegisterinMonth: 50
+            PlacementinMonth: 20
+            GraduateinMonth: 10
+            Menteeactive: 20
+            MenteePlacement: 30
+            MenteeFeedback: 40        
+    getprofilementee:
+      description: Get Mentee Profil With Log
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/schemaforlogmentee"
+          examples:
+            example1:
+              value:
+                {
+                  name: Rahman Kamil,
+                  class: Quality Engineer Batch 8,
+                  major: IPA,
+                  graduate: SMA Negeri 4 Surabaya,
+                  phone: "12345678",
+                  telegram: "@rahmankamil",
+                  discord: "@rahmankamil#2347",
+                  email: rahmankamil24@gmail.com,
+                  log:
+                    [
+                      {
+                      user: nawi,
+                      status: Unit 3,
+                      feedback: Semangat ...,
+                      url: jfduaudisd.jpg,
+                      created_at: 11-06-2022,
+                      },
+                      {
+                      user: amin,
+                      status: Graduated,
+                      feedback: Kepada ...,
+                      url: esrdtfyghuj.jpg,
+                      created_at: 11-06-2022,
+                      },
+                    ]
+                }
+#######################################
+## Parameter
+######################################
+  parameters:
+    ParamId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+    ParamClassQuery:
+      name: class
+      in: query
+      required: false
+      schema:
+        type: string
+        example: BackEndEngineerBatch11
+    ParamCategoryQuery:
+      name: category
+      in: query
+      required: false
+      schema:
+        type: string
+        example: informatics
+    ParamStatusQuery:
+      name: status
+      in: query
+      required: false
+      schema:
+        type: string
+        example: Placement
+
+#####################################
+## JWT auth
+####################################
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "use Token"
+######################################
+## Example
+#####################################
+  examples:
+    accessIsDenied:
+      value:
+        code: 400
+        message: Role Access is denied
+    accessForbidden:
+      value:
+        code: 400
+        message: Access Forbidden
+    badRequest:
+      value:
+        code: 400
+        message: Bad Request
+    cantConnecttoServer:
+      value:
+        code: 500
+        message: Can't Connect to server
+    dataisAvailable:
+      value:
+        code: 400
+        message: Data is Available
+    dataNotFound:
+      value:
+        code: 400
+        message: Data Not Found
+    detailsCantBeEmpty:
+      value:
+        code: 400
+        message: Details Can't Be Empty
+    emailAlreadyExist:
+      value:
+        code: 400
+        message: Email Already Exist
+    failedtoUploadFile:
+      value:
+        code: 500
+        message: Failed to Upload File
+    fileExtensionNotAllowed:
+      value:
+        code: 400
+        message: File Extension Not Allowed
+    idProductNotFound:
+      value:
+        code: 400
+        message: Id Product Not Found
+    illegalFile:
+      value:
+        code: 400
+        message: Illegal File
+    invalidEmail:
+      value:
+        code: 400
+        message: Invalid Email
+    invalidId:
+      value:
+        code: 400
+        message: Invalid Id
+    invalidName:
+      value:
+        code: 400
+        message: Invalid Name
+    invalidParam:
+      value:
+        code: 400
+        message: Invalid Param
+    invalidPassword:
+      value:
+        code: 400
+        message: Invalid Password
+    invalidTelephoneNumber:
+      value:
+        code: 400
+        message: Invalid Telephone Number
+    nameAlphanumeric:
+      value:
+        code: 400
+        message: Name can only contains alphanumeric
+    notAvailable:
+      value:
+        code: 400
+        message: Not Available
+    passwordMustConsistOf:
+      value:
+        code: 400
+        message: Password must consist of 6 characters or more
+    sizeFileTooBig:
+      value:
+        code: 400
+        message: Size File Too Big
+    invalidteam:
+      value:
+        code: 400
+        message: Team enum just have Acedemic/People/Placement/Admission
+    invalidrole:
+      value:
+        code: 400
+        message: Role enum just have Admin/Default
+    invalidstatus:
+      value:
+        code: 400
+        message: Status enum just have Active/Not-Active/Deleted
+    invaliduser:
+      value:
+        code: 400
+        message: User Tidak Di Temukan
+    emailnotregistered:
+      value:
+        code: 400
+        message: Email belum terdaptar
