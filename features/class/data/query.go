@@ -3,7 +3,6 @@ package data
 import (
 	"errors"
 	"project/dashboard/features/class"
-	"project/dashboard/middlewares"
 
 	"gorm.io/gorm"
 )
@@ -31,7 +30,7 @@ func (storage *Storage) InsertClass(core class.CoreClass) (string, error) {
 
 func (storage *Storage) SelectAllClass(page int) ([]class.CoreClass, error) {
 	var model []Class
-	count := 8 * (page - 1)
+	count := 5 * (page - 1)
 	tx := storage.query.Limit(5).Offset(count).Find(&model)
 	if tx.Error != nil {
 		return []class.CoreClass{}, tx.Error
@@ -71,17 +70,17 @@ func (storage *Storage) DeleteAClass(classid uint) (string, error) {
 	return "Sukses Menghapus Data", nil
 }
 
-func (storage *Storage) GetToken(email, password string) (string, error) {
-	var datauser User
-	tx := storage.query.Where("email = ? and password = ?", email, password).First(&datauser)
-	if tx.Error != nil {
-		return "", tx.Error
-	}
+// func (storage *Storage) GetToken(email, password string) (string, error) {
+// 	var datauser User
+// 	tx := storage.query.Where("email = ? and password = ?", email, password).First(&datauser)
+// 	if tx.Error != nil {
+// 		return "", tx.Error
+// 	}
 
-	token, err := middlewares.CreateToken(int(datauser.ID), datauser.role)
-	if err != nil {
-		return "", err
-	}
+// 	token, err := middlewares.CreateToken(int(datauser.ID), datauser.role)
+// 	if err != nil {
+// 		return "", err
+// 	}
 
-	return token, nil
-}
+// 	return token, nil
+// }

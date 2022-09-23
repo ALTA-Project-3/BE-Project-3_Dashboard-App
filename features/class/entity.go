@@ -16,7 +16,7 @@ type DataInterface interface {
 	UpdateAClass(core CoreClass, idclass uint) (string, error)
 	DeleteAClass(classid uint) (string, error)
 	GetClassUserid(classid uint) uint
-	GetToken(email, password string) (string, error)
+	// GetToken(email, password string) (string, error)
 }
 
 type UsecaseInterface interface {
@@ -24,5 +24,5 @@ type UsecaseInterface interface {
 	GetAllClass(page int) ([]CoreClass, error)
 	EditAClass(core CoreClass, idclass uint) (string, error)
 	DeleteAClass(userid, classid uint) (string, error)
-	GetToken(email, password string) (string, error)
+	// GetToken(email, password string) (string, error)
 }
